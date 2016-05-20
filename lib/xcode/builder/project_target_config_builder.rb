@@ -5,7 +5,7 @@ module Xcode
       def prepare_xcodebuild sdk=nil
         cmd = super sdk
         cmd << "-project \"#{@target.project.path}\""
-        cmd << "-target \"#{@target.name}\""
+        cmd << "-scheme \"#{@target.name}\""
         cmd << "-config \"#{@config.name}\""
         cmd
       end

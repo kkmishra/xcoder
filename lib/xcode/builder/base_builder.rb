@@ -78,7 +78,7 @@ module Xcode
           end
 
           cmd << "-sdk #{sdk}" unless sdk.nil?
-          cmd << "-destination \"#{destination}\"" unless destination.nil?
+          cmd << "-destination '#{destination}'" unless destination.nil?
 
           yield cmd if block_given?
         end
@@ -107,6 +107,7 @@ module Xcode
 
       def prepare_clean_command sdk=@sdk
         cmd = prepare_xcodebuild sdk
+        print_task :builder, "#{cmd}", :notice
         cmd << "clean"
         cmd
       end
