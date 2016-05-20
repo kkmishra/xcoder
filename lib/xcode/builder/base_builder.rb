@@ -259,10 +259,10 @@ module Xcode
       end
 
       def configuration_build_path
-        "#{symroot}/#{@config.name}-"+sdk_name
+        "#{symroot}/#{@config.name}-"+sdk_name_prefix
       end
 
-      def sdk_name
+      def sdk_name_prefix
         @sdk || "iphoneos"
       end
 
