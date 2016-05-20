@@ -9,7 +9,7 @@ module Xcode
     class BaseBuilder
       include Xcode::TerminalOutput
 
-      attr_accessor :profile, :identity, :build_path, :keychain, :sdk, :objroot, :symroot
+      attr_accessor :profile, :identity, :build_path, :keychain, :sdk, :objroot, :symroot, :destination, :device_target
       attr_reader   :config, :target
 
       def initialize(target, config)
@@ -78,6 +78,7 @@ module Xcode
           end
 
           cmd << "-sdk #{sdk}" unless sdk.nil?
+          cmd << "-destination #{destination}" unless destination.nil?
 
           yield cmd if block_given?
         end
@@ -259,11 +260,11 @@ module Xcode
       end
 
       def configuration_build_path
-        "#{symroot}/#{@config.name}-"+sdk_name_prefix
+        "#{symroot}/#{@config.name}-#{configuration_name_suffix}"
       end
 
-      def sdk_name_prefix
-        @sdk || "iphoneos"
+      def configuration_name_suffix
+        @device_target == :simulator ? "iphonesimulator": "iphoneos"
       end
 
       def entitlements_path
